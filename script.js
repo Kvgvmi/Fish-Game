@@ -134,3 +134,27 @@ canvas.addEventListener("mouseup", function () {
   }
 }
 
+//the new keyword is a special cpmmand in javascript it will go up and class constructor 
+//will create new blank player object and assign it properties based on class blueprint declared  
+const player = new Player();
+
+
+
+// Bubbles
+const bubblesArray = [];
+const bubbleImage = new Image();
+bubbleImage.src = "./assets/images/bubble_pop_frame_01.png";
+
+class Bubble {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height + 100;
+    this.radius = 50;
+    this.speed = Math.random() * 5 + 1;
+    this.distance;
+    this.counted = false;
+    this.sound = Math.random() <= 0.5 ? "sound1" : "sound2";//ila kant random number sgher or ysawi 0.5 thenit's sound1 o ila l3ekss sound 2
+  }
+
+
+  
