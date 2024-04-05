@@ -220,3 +220,60 @@ function handleBubbles() {
   for (let i = 0; i < bubblesArray.length; i++) {}
 }
 
+// Repeating backgrounds
+const background = new Image();
+background.src = "./assets/images/background1.png";
+
+const BG = {
+  x1: 0,
+  x2: canvas.width,
+  y: 0,
+  width: canvas.width,
+  height: canvas.height,
+};
+
+function handleBackground() {
+  BG.x1 -= gameSpeed;
+  if (BG.x1 < -BG.width) BG.x1 = BG.width;
+  BG.x2 -= gameSpeed;
+  if (BG.x2 < -BG.width) BG.x2 = BG.width;
+  ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
+  ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
+}
+
+// Enemies
+const enemyImage = new Image();
+enemyImage.src = "./assets/images/fish-enemy1.png";
+
+class Enemy {
+  constructor() {
+    this.x = canvas.width + 200;
+    this.y = Math.random() * (canvas.height - 150) + 90;
+    this.radius = 60;
+    this.speed = Math.random() * 2 + 2;
+    this.frame = 0;
+    this.frameX = 0;
+    this.frameY = 0;
+    this.spriteWidth = 418;
+    this.spriteHeight = 397;
+  }
+
+  draw() {
+    // ctx.fillStyle = "red";
+    // ctx.beginPath();
+    // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    // ctx.fill();
+    ctx.drawImage(
+      enemyImage,
+      this.frameX * this.spriteWidth,
+      this.frameY * this.spriteHeight,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x - 60,
+      this.y - 70,
+      this.spriteWidth / 3,
+      this.spriteHeight / 3
+    );
+  }
+
+  
