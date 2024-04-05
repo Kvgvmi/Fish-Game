@@ -276,4 +276,66 @@ class Enemy {
     );
   }
 
-  
+  update() {
+    this.x -= this.speed;
+    if (this.x < 0 - this.radius * 2) {
+      this.x = canvas.width + 200;
+      this.y = Math.random() * (canvas.height - 150) + 90;
+      this.speed = Math.random() * 2 + 2;
+    }
+
+    if (gameFrame % 5 == 0) {
+      this.frame++;
+      if (this.frame >= 12) this.frame = 0;
+      if (this.frame == 3 || this.frame == 7 || this.frame == 11) {
+        this.frameX = 0;
+      } else {
+        this.frameX++;
+      }
+      if (this.frame < 3) this.frameY = 0;
+      else if (this.frame < 7) this.frameY = 1;
+      else if (this.frame < 11) this.frameY = 2;
+      else this.frameY = 0;
+    }
+
+    // Collision with Player
+    const dx = this.x - player.x;
+    const dy = this.y - player.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance < this.radius + player.radius) {
+      handleGameOver();
+    }
+  }
+}
+
+const enemy1 = new Enemy();
+function handleEnemies() {
+  enemy1.draw();
+  enemy1.update();
+}
+
+function handleGameOver() {
+  ctx.fillStyle = "white";
+  ctx.fillText("Game Over! Score: " + score, 215, 230);
+  gameOver = true;
+}
+
+// Animation loop
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // to clear the entire canvas from old paint between every animation 
+  handleBackground();
+  handleBubbles();
+  player.update();
+  player.draw();
+  handleEnemies();
+  ctx.fillStyle = "black";
+  ctx.fillText("score: " + score, 10, 35);
+  gameFrame++;
+  if (!gameOver) requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize", function () {
+  canvasPosition = canvas.getBoundingClientRect();
+});
