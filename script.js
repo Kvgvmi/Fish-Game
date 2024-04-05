@@ -30,31 +30,32 @@ canvas.addEventListener("mousedown", function (event) {
 
 // This event listener is triggered when the mouse button is released on the canvas. It sets mouse.click back to false to indicate that the mouse button is no longer clicked.
 canvas.addEventListener("mouseup", function () {
-    mouse.click = false;
-  });
-  
-  // Player
-  const playerLeft = new Image();
-  playerLeft.src = "./assets/images/fish-swim-left.png";
-  const playerRight = new Image();
-  playerRight.src = "./assets/images/fish-swim-right.png";
-  
-  class Player {
-    constructor() {
-      this.x = canvas.width; // x inicial
-      this.y = canvas.height / 2; // y inicial
-      this.radius = 50;
-      //rotate the player towards current mouse position
-      this.angle = 0; // direct the Fish
-      //to always face the direction it's swimming in
-      this.frameX = 0; // sprite x
-      this.frameY = 0; // sprite y
-      this.frame = 0; // sprite total
-      this.spriteWidth = 498; // four columns
-      this.spriteHeight = 327; // three lines
-    }
+  mouse.click = false;
+});
 
-    //to move the player towards the mouse
+// Player
+const playerLeft = new Image();
+playerLeft.src = "./assets/images/fish-swim-left.png";
+const playerRight = new Image();
+playerRight.src = "./assets/images/fish-swim-right.png";
+
+class Player {
+  constructor() {
+    this.x = canvas.width; // x inicial
+    this.y = canvas.height / 2; // y inicial
+    this.radius = 50;
+    //rotate the player towards current mouse position
+    this.angle = 0; // direct the Fish
+    //to always face the direction it's swimming in
+    this.frameX = 0; // sprite x
+    this.frameY = 0; // sprite y
+    this.frame = 0; // sprite total
+    this.spriteWidth = 498; // four columns
+    this.spriteHeight = 327; // three lines
+  }
+
+  
+  //to move the player towards the mouse
   update() {
     const dx = this.x - mouse.x; // dx = distance from x
     const dy = this.y - mouse.y; // dy = distance from y
@@ -87,6 +88,8 @@ canvas.addEventListener("mouseup", function () {
     }
   }
 
+
+  
   draw() {
     if (mouse.click) {
       ctx.lineWidth = 0.2;
@@ -155,7 +158,6 @@ class Bubble {
     this.counted = false;
     this.sound = Math.random() <= 0.5 ? "sound1" : "sound2";//ila kant random number sgher or ysawi 0.5 thenit's sound1 o ila l3ekss sound 2
   }
-
 
   // Method which will just move bubbles up
   update() {
