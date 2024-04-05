@@ -193,4 +193,30 @@ function handleBubbles() {
     bubblesArray.push(new Bubble());
   }
 
-  
+  for (let i = 0; i < bubblesArray.length; i++) {
+    bubblesArray[i].update();
+    bubblesArray[i].draw();
+    //to check if bubble has disappeared over the top edge and if so i remove it with splice 
+    if (bubblesArray[i].y < 0 - bubblesArray[i].radius * 2) {//so bubbles won't disapear faster
+      bubblesArray.splice(i, 1);
+      i--;
+    } else if (// masafa bin centre of the 2 object is less than cho3a3ayn mjmo3in bjoj 
+      bubblesArray[i].distance < bubblesArray[i].radius + player.radius //check distance between player and bubble
+    ) {
+      if (!bubblesArray[i].counted) {
+        if (bubblesArray[i].sound == "sound1") {
+          bubblePop1.play();
+        } else {
+          bubblePop2.play();
+        }
+        score++;
+        bubblesArray[i].counted = true;
+        bubblesArray.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  for (let i = 0; i < bubblesArray.length; i++) {}
+}
+
