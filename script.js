@@ -157,4 +157,28 @@ class Bubble {
   }
 
 
-  
+  // Method which will just move bubbles up
+  update() {
+    this.y -= this.speed;
+    this.dx = this.x - player.x;// dx distance on the horizontal x-axis will be diffrence between the bubble minus player's current horizontal x position  
+    this.dy = this.y - player.y;
+    this.distance = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+  }
+
+  draw() {
+    // ctx.fillStyle = "blue";
+    // ctx.beginPath();
+    // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    // ctx.fill();
+    // ctx.closePath();
+    // ctx.stroke();
+    ctx.drawImage(
+      bubbleImage,
+      this.x - 65,
+      this.y - 65,
+      this.radius * 2.6,
+      this.radius * 2.6
+    );
+  }
+}
+
