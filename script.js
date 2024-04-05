@@ -34,21 +34,22 @@ canvas.addEventListener("mouseup", function () {
 });
 
 // Player
-const playerLeft = new Image();
-playerLeft.src = "./assets/images/fish-swim-left.png";
-const playerRight = new Image();
-playerRight.src = "./assets/images/fish-swim-right.png";
+const playerLeft = new Image();// Create image object for player facing left
+playerLeft.src = "./assets/images/fish-swim-left.png";// Set image source
+const playerRight = new Image();// Create image object for player facing right
+playerRight.src = "./assets/images/fish-swim-right.png";// Set image source
+
 
 class Player {
   constructor() {
-    this.x = canvas.width; // x inicial
-    this.y = canvas.height / 2; // y inicial
+    this.x = canvas.width; // Initial x position
+    this.y = canvas.height / 2; // Initial y position
     this.radius = 50;
     //rotate the player towards current mouse position
     this.angle = 0; // direct the Fish
     //to always face the direction it's swimming in
-    this.frameX = 0; // sprite x
-    this.frameY = 0; // sprite y
+    this.frameX = 0; // Current frame X position for sprite
+    this.frameY = 0; // Current frame Y position for sprite
     this.frame = 0; // sprite total
     this.spriteWidth = 498; // four columns
     this.spriteHeight = 327; // three lines
@@ -59,12 +60,13 @@ class Player {
   update() {
     const dx = this.x - mouse.x; // dx = distance from x
     const dy = this.y - mouse.y; // dy = distance from y
-    let theta = Math.atan2(dy, dx);
+    let theta = Math.atan2(dy, dx); // Calculate angle between player and mouse
     this.angle = theta;
 
 
     //if current mouse x position is not equal to current player's position 
     if (mouse.x != this.x) { 
+      // Move player towards mouse horizontally
       this.x -= dx / 20;
     }
     if (mouse.y != this.y) {//madernach else if hena 7it bghinahum bjoj ikhedmo de9a we7da
@@ -73,7 +75,7 @@ class Player {
 
 
     //------------------------------??-------------------------------
-    if (gameFrame % 5 == 0) {
+    if (gameFrame % 5 == 0) { // Frame-based animation
       this.frame++;
       if (this.frame >= 12) this.frame = 0;
       if (this.frame == 3 || this.frame == 7 || this.frame == 11) {
@@ -98,12 +100,6 @@ class Player {
       ctx.lineTo(mouse.x, mouse.y);
       ctx.stroke();
     }
-    // ctx.fillStyle = "red";
-    // ctx.beginPath();
-    // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    // ctx.fill();
-    // ctx.closePath();
-    // ctx.fillRect(this.x, this.y, this.radius, 10);
 
     ctx.save();
     ctx.translate(this.x, this.y);
@@ -150,30 +146,25 @@ bubbleImage.src = "./assets/images/bubble_pop_frame_01.png";
 
 class Bubble {
   constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = canvas.height + 100;
+    this.x = Math.random() * canvas.width;// Random x position
+    this.y = canvas.height + 100;// Initial y position off-screen
     this.radius = 50;
-    this.speed = Math.random() * 5 + 1;
+    this.speed = Math.random() * 5 + 1;// Random speed
     this.distance;
     this.counted = false;
     this.sound = Math.random() <= 0.5 ? "sound1" : "sound2";//ila kant random number sgher or ysawi 0.5 thenit's sound1 o ila l3ekss sound 2
   }
 
-  // Method which will just move bubbles up
+  // Update bubble position
   update() {
-    this.y -= this.speed;
-    this.dx = this.x - player.x;// dx distance on the horizontal x-axis will be diffrence between the bubble minus player's current horizontal x position  
-    this.dy = this.y - player.y;
-    this.distance = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+    this.y -= this.speed;// Move bubble upwards
+    this.dx = this.x - player.x;// Horizontal distance from player
+    this.dy = this.y - player.y;// Vertical distance from player
+    this.distance = Math.sqrt(this.dx * this.dx + this.dy * this.dy);// Calculate distance
   }
 
+  // Draw bubble on canvas
   draw() {
-    // ctx.fillStyle = "blue";
-    // ctx.beginPath();
-    // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    // ctx.fill();
-    // ctx.closePath();
-    // ctx.stroke();
     ctx.drawImage(
       bubbleImage,
       this.x - 65,
@@ -183,6 +174,8 @@ class Bubble {
     );
   }
 }
+
+// Audio for bubble popping
 
 const bubblePop1 = document.createElement("audio");
 bubblePop1.src = "./assets/sounds/bubbles-single1.wav";
@@ -306,7 +299,7 @@ class Enemy {
     const distance = Math.sqrt(dx * dx + dy * dy);
     if (distance < this.radius + player.radius) {
       handleGameOver();
-    }
+    } 
   }
 }
 
@@ -338,6 +331,7 @@ function animate() {
 
 animate();
 
+//when we resize browser window the mouse position is always correct
 window.addEventListener("resize", function () {
   canvasPosition = canvas.getBoundingClientRect();
 });
