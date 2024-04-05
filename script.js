@@ -87,4 +87,50 @@ canvas.addEventListener("mouseup", function () {
     }
   }
 
-  
+  draw() {
+    if (mouse.click) {
+      ctx.lineWidth = 0.2;
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(mouse.x, mouse.y);
+      ctx.stroke();
+    }
+    // ctx.fillStyle = "red";
+    // ctx.beginPath();
+    // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    // ctx.fill();
+    // ctx.closePath();
+    // ctx.fillRect(this.x, this.y, this.radius, 10);
+
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    if (this.x >= mouse.x) {
+      ctx.drawImage(
+        playerLeft,
+        this.frameX * this.spriteWidth,
+        this.frameY * this.spriteHeight,
+        this.spriteWidth,
+        this.spriteHeight,
+        0 - 60,
+        0 - 45,
+        this.spriteWidth / 4,
+        this.spriteHeight / 4
+      );
+    } else {
+      ctx.drawImage(
+        playerRight,
+        this.frameX * this.spriteWidth,
+        this.frameY * this.spriteHeight,
+        this.spriteWidth,
+        this.spriteHeight,
+        0 - 60,
+        0 - 45,
+        this.spriteWidth / 4,
+        this.spriteHeight / 4
+      );
+    }
+    ctx.restore();
+  }
+}
+
