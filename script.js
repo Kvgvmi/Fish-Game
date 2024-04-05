@@ -185,29 +185,32 @@ bubblePop2.src = "./assets/sounds/bubbles-single2.wav";
 //lita7akum
 function handleBubbles() {
   if (gameFrame % 50 == 0) { //adding bubbles every 50 frames
-    bubblesArray.push(new Bubble());
+    bubblesArray.push(new Bubble());// Create and add new bubble to array
   }
 
-  for (let i = 0; i < bubblesArray.length; i++) {
-    bubblesArray[i].update();
-    bubblesArray[i].draw();
+  for (let i = 0; i < bubblesArray.length; i++) { // Loop through all bubbles
+    bubblesArray[i].update(); // Update bubble position
+    bubblesArray[i].draw();// Draw bubble on canvas
     //to check if bubble has disappeared over the top edge and if so i remove it with splice 
     if (bubblesArray[i].y < 0 - bubblesArray[i].radius * 2) {//so bubbles won't disapear faster
-      bubblesArray.splice(i, 1);
-      i--;
+      bubblesArray.splice(i, 1);// Remove bubble from array
+      i--;// Decrement index to adjust for removed bubble
+
+
+      // If bubble collides with player
     } else if (// masafa bin centre of the 2 object is less than cho3a3ayn mjmo3in bjoj 
       bubblesArray[i].distance < bubblesArray[i].radius + player.radius //check distance between player and bubble
     ) {
-      if (!bubblesArray[i].counted) {
-        if (bubblesArray[i].sound == "sound1") {
-          bubblePop1.play();
+      if (!bubblesArray[i].counted) {// If bubble collides with player
+        if (bubblesArray[i].sound == "sound1") {// If bubble sound is sound1
+          bubblePop1.play();// Play first bubble pop sound
         } else {
           bubblePop2.play();
         }
-        score++;
-        bubblesArray[i].counted = true;
-        bubblesArray.splice(i, 1);
-        i--;
+        score++;// Increase score
+        bubblesArray[i].counted = true;// Set bubble as counted
+        bubblesArray.splice(i, 1);// Remove bubble from array
+        i--;// Decrement index to adjust for removed bubble
       }
     }
   }
@@ -228,12 +231,12 @@ const BG = {
 };
 
 function handleBackground() {
-  BG.x1 -= gameSpeed;
-  if (BG.x1 < -BG.width) BG.x1 = BG.width;
-  BG.x2 -= gameSpeed;
-  if (BG.x2 < -BG.width) BG.x2 = BG.width;
-  ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
-  ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
+  BG.x1 -= gameSpeed;// Move first background image to the left
+  if (BG.x1 < -BG.width) BG.x1 = BG.width;// Reset position if off-screen
+  BG.x2 -= gameSpeed;// Move second background image to the left
+  if (BG.x2 < -BG.width) BG.x2 = BG.width;// Reset position if off-screen
+  ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);// Draw first background image
+  ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);// Draw second background image
 }
 
 // Enemies
@@ -242,22 +245,20 @@ enemyImage.src = "./assets/images/fish-enemy1.png";
 
 class Enemy {
   constructor() {
-    this.x = canvas.width + 200;
-    this.y = Math.random() * (canvas.height - 150) + 90;
+    this.x = canvas.width + 200;// Initial x position off-screen to the right
+    this.y = Math.random() * (canvas.height - 150) + 90; // Random y position within canvas height
     this.radius = 60;
-    this.speed = Math.random() * 2 + 2;
-    this.frame = 0;
+    this.speed = Math.random() * 2 + 2;// Random speed between 2 and 4
+    this.frame = 0;// Frame number for animation
     this.frameX = 0;
     this.frameY = 0;
     this.spriteWidth = 418;
     this.spriteHeight = 397;
   }
 
+  // Method to draw enemy on canvas
   draw() {
-    // ctx.fillStyle = "red";
-    // ctx.beginPath();
-    // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    // ctx.fill();
+  
     ctx.drawImage(
       enemyImage,
       this.frameX * this.spriteWidth,
@@ -271,12 +272,13 @@ class Enemy {
     );
   }
 
+  // Method to update enemy position and animation
   update() {
-    this.x -= this.speed;
-    if (this.x < 0 - this.radius * 2) {
-      this.x = canvas.width + 200;
-      this.y = Math.random() * (canvas.height - 150) + 90;
-      this.speed = Math.random() * 2 + 2;
+    this.x -= this.speed;// Move enemy to the left
+    if (this.x < 0 - this.radius * 2) {// If enemy is off-screen to the left
+      this.x = canvas.width + 200;// Reset x position off-screen to the right
+      this.y = Math.random() * (canvas.height - 150) + 90;// Random y position within canvas height
+      this.speed = Math.random() * 2 + 2;// Random speed between 2 and 4
     }
 
     if (gameFrame % 5 == 0) {
@@ -302,31 +304,36 @@ class Enemy {
     } 
   }
 }
-
+// Create a new instance of Enemy class
 const enemy1 = new Enemy();
+
+
+// Function to handle enemy drawing and updating
 function handleEnemies() {
-  enemy1.draw();
-  enemy1.update();
+  enemy1.draw();// Draw enemy on canvas
+  enemy1.update();// Update enemy position and animation
 }
 
+
+// Function to handle game over state
 function handleGameOver() {
-  ctx.fillStyle = "white";
-  ctx.fillText("Game Over! Score: " + score, 215, 230);
-  gameOver = true;
+  ctx.fillStyle = "white";// Set fill color to white
+  ctx.fillText("Game Over! Score: " + score, 215, 230);// Display game over message with score
+  gameOver = true;// Set game over flag to true
 }
 
 // Animation loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // to clear the entire canvas from old paint between every animation 
-  handleBackground();
-  handleBubbles();
-  player.update();
-  player.draw();
-  handleEnemies();
-  ctx.fillStyle = "black";
-  ctx.fillText("score: " + score, 10, 35);
-  gameFrame++;
-  if (!gameOver) requestAnimationFrame(animate);
+  handleBackground(); // Draw and handle background animation
+  handleBubbles();// Handle bubbles animation
+  player.update();// Update player position and animation
+  player.draw();// Draw player on canvas
+  handleEnemies();// Handle enemies animation
+  ctx.fillStyle = "black";// Set fill color to black
+  ctx.fillText("score: " + score, 10, 35);// Display current score on canvas
+  gameFrame++;// Increment game frame count
+  if (!gameOver) requestAnimationFrame(animate); // If game is not over, request next animation frame
 }
 
 animate();
