@@ -28,3 +28,30 @@ canvas.addEventListener("mousedown", function (event) {
   mouse.y = event.y - canvasPosition.top;
 });
 
+// This event listener is triggered when the mouse button is released on the canvas. It sets mouse.click back to false to indicate that the mouse button is no longer clicked.
+canvas.addEventListener("mouseup", function () {
+    mouse.click = false;
+  });
+  
+  // Player
+  const playerLeft = new Image();
+  playerLeft.src = "./assets/images/fish-swim-left.png";
+  const playerRight = new Image();
+  playerRight.src = "./assets/images/fish-swim-right.png";
+  
+  class Player {
+    constructor() {
+      this.x = canvas.width; // x inicial
+      this.y = canvas.height / 2; // y inicial
+      this.radius = 50;
+      //rotate the player towards current mouse position
+      this.angle = 0; // direct the Fish
+      //to always face the direction it's swimming in
+      this.frameX = 0; // sprite x
+      this.frameY = 0; // sprite y
+      this.frame = 0; // sprite total
+      this.spriteWidth = 498; // four columns
+      this.spriteHeight = 327; // three lines
+    }
+
+    
