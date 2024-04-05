@@ -182,3 +182,15 @@ class Bubble {
   }
 }
 
+const bubblePop1 = document.createElement("audio");
+bubblePop1.src = "./assets/sounds/bubbles-single1.wav";
+const bubblePop2 = document.createElement("audio");
+bubblePop2.src = "./assets/sounds/bubbles-single2.wav";
+
+//lita7akum
+function handleBubbles() {
+  if (gameFrame % 50 == 0) { //adding bubbles every 50 frames
+    bubblesArray.push(new Bubble());
+  }
+
+  
